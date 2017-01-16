@@ -36,8 +36,12 @@ describe BottledDecorator do
       def full_name
         "#{first_name} #{last_name}"
       end
+
+      def display_test_var
+        @test_var
+      end
     end
-    ExampleDecoratorClass.(decorated)
+    ExampleDecoratorClass.(decorated, test_var: 'This is a test variable')
   }
   subject(:stacking_decorator){
     class StackingDecoratorClass
@@ -80,6 +84,14 @@ describe BottledDecorator do
 
     it "is able to accept direct calls to the components methods from the stacked decorator" do
       expect(stacking_decorator.last_name).to eql("Hayes-Reed")
+    end
+
+    it "can accept additional option variables" do
+      expect(decorator.display_test_var).to eql("This is a test variable")
+    end
+
+    it "can access additional option variables from the stacked decorator" do
+      expect(stacking_decorator.display_test_var).to eql("This is a test variable")
     end
   end
 end
