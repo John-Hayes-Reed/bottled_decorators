@@ -1,7 +1,7 @@
 module BottledDecorator
-  
-  def self.call(*args)
-    new(*args)
+
+  def self.included(base)
+    base.extend(ClassMethods)
   end
 
   def initialize(component, **options)
@@ -18,6 +18,12 @@ module BottledDecorator
     self.send(method)
   rescue NoMethodError => e
     raise NoMethodError.new("Method #{method} was not found in the decorator, or the decorated objects", 'NoMethodError')
+  end
+
+  module ClassMethods
+    def call(*args)
+      new(*args)
+    end
   end
 
 end
