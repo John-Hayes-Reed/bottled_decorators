@@ -17,6 +17,7 @@ class #{class_name}
     # access the decorated object through the @component instance variable
     # note, you dont need to call methods of the component in the instance variable.
     # if your decorated model or class has a user_name method, you can just call user_name.
+  end
   "
       end
     end
