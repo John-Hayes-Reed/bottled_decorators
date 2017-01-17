@@ -12,10 +12,7 @@ module BottledDecorator
   end
 
   def method_missing(method, *args)
-    send :define_singleton_method, method do
-      return @component.send(method)
-    end
-    self.send(method)
+    return @component.send(method)
   rescue NoMethodError => e
     raise NoMethodError.new("Method #{method} was not found in the decorator, or the decorated objects", 'NoMethodError')
   end
