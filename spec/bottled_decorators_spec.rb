@@ -22,6 +22,10 @@ describe BottledDecorator do
         "Hayes-Reed"
       end
 
+      def example_with_parameters(a_param)
+        return true if a_param
+      end
+
     end
     ExampleDecoratedClass.new
   }
@@ -92,6 +96,10 @@ describe BottledDecorator do
 
     it "can access additional option variables from the stacked decorator" do
       expect(stacking_decorator.display_test_var).to eql("This is a test variable")
+    end
+
+    it "can access the components original methods with parameters" do
+      expect(decorator.example_with_parameters("parameter")).to eql(true)
     end
   end
 end

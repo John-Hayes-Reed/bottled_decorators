@@ -12,7 +12,7 @@ module BottledDecorator
   end
 
   def method_missing(method, *args)
-    return @component.send(method)
+    return @component.send(method, *args)
   rescue NoMethodError => e
     raise NoMethodError.new("Method #{method} was not found in the decorator, or the decorated objects", 'NoMethodError')
   end
