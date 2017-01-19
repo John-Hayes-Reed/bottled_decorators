@@ -1,5 +1,5 @@
 require 'spec_helper'
-
+require 'json'
 describe BottledDecorators do
   it 'has a version number' do
     expect(BottledDecorators::VERSION).not_to be nil
@@ -9,17 +9,17 @@ end
 describe BottledDecorator do
   subject(:decorated){
     class ExampleDecoratedClass
+      attr_accessor :attributes, :first_name, :last_name
+
+      def initialize(attributes = {first_name: 'John', last_name: 'Hayes-Reed'})
+        @attributes = attributes
+        attributes.each do |att, val|
+          self.send("#{att}=", val)
+        end
+      end
 
       def example_method
         "This is an example"
-      end
-
-      def first_name
-        "John"
-      end
-
-      def last_name
-        "Hayes-Reed"
       end
 
       def example_with_parameters(a_param)
@@ -99,6 +99,7 @@ describe BottledDecorator do
     end
 
     it "can access the components original methods with parameters" do
+      puts decorator.to_json
       expect(decorator.example_with_parameters("parameter")).to eql(true)
     end
   end
