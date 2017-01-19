@@ -1,8 +1,10 @@
 # BottledDecorators
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/bottled_decorators`. To experiment with that code, run `bin/console` for an interactive prompt.
+## The best thing to happen since bottled water
 
-TODO: Delete this and the text above, and describe your gem
+Wait a minute, I thought that was [bottled_services?](https://github.com/John-Hayes-Reed/bottled_services), well nevermind.
+bottled_decorators are here to make your life easier, and provide decorators that are actually decorators and not just View Objects / View Helpers with the name 'decorator'. bottled_decorators encourage the use of DRY and reusable code by stopping the direct model relation, and 'my job is to prepare something for the view' mentality seen in some gems and implementations, and to bring decorators back to what they should be, a reusable and stackable extra layer of functionality.  
+Creating your decorators are also as easy as pie with the botted_decorator generator. All you need to worry about is your method logic, let bottled_decorators do the rest for you!
 
 ## Installation
 
