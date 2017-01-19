@@ -99,7 +99,6 @@ describe BottledDecorator do
     end
 
     it "can access the components original methods with parameters" do
-      puts decorator.to_json
       expect(decorator.example_with_parameters("parameter")).to eql(true)
     end
   end
