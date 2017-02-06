@@ -113,5 +113,21 @@ describe BottledDecorator do
     it "can be converted to a Hash" do
       expect(decorator.to_h).to eql({"first_name"=>"John", "last_name"=>"Hayes-Reed", "full_name"=>"John Hayes-Reed", "example_method"=>"This is an example within an example", "display_test_var"=>"This is a test variable"})
     end
+
+    it "should respond to decorated method" do
+      expect(decorator.respond_to?(:full_name)).to eq(true)
+    end
+
+    it "should respond to component method" do
+      expect(decorator.respond_to?(:first_name)).to eq(true)
+    end
+
+    it "should not respond to unknown methods" do
+      expect(decorator.respond_to?(:random_method_name)).to eq(false)
+    end
+
+    it "should repond to stacked component methods" do
+      expect(stacking_decorator.respond_to?(:first_name)).to eq(true)
+    end
   end
 end

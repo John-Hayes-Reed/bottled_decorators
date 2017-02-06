@@ -41,6 +41,12 @@ module BottledDecorator
     end
   end
 
+  def respond_to?(tester)
+    response = @component.respond_to?(tester)
+    return true if response
+    self.class.instance_methods(false).map(&:to_s).include?("#{tester}")
+  end
+
   module ClassMethods
     def call(*args)
       new(*args)
