@@ -26,6 +26,10 @@ describe BottledDecorator do
         return true if a_param
       end
 
+      def as_json(args)
+        JSON.parse @attributes.to_json
+      end
+
     end
     ExampleDecoratedClass.new
   }
@@ -100,6 +104,14 @@ describe BottledDecorator do
 
     it "can access the components original methods with parameters" do
       expect(decorator.example_with_parameters("parameter")).to eql(true)
+    end
+
+    it "can be converted to JSON" do
+      expect(decorator.to_json).to eql("{\"first_name\":\"John\",\"last_name\":\"Hayes-Reed\",\"full_name\":\"John Hayes-Reed\",\"example_method\":\"This is an example within an example\",\"display_test_var\":\"This is a test variable\"}")
+    end
+
+    it "can be converted to a Hash" do
+      expect(decorator.to_h).to eql({"first_name"=>"John", "last_name"=>"Hayes-Reed", "full_name"=>"John Hayes-Reed", "example_method"=>"This is an example within an example", "display_test_var"=>"This is a test variable"})
     end
   end
 end
