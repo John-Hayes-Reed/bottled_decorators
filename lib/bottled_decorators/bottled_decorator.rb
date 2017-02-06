@@ -49,7 +49,15 @@ module BottledDecorator
 
   module ClassMethods
     def call(*args)
-      new(*args)
+      if args.first.respond_to?(:each)
+        [].tap do |arr|
+          args.first.each do |comp|
+            arr << new(*([comp, args[1..-1]].flatten))
+          end
+        end
+      else
+        new(*args)
+      end
     end
   end
 

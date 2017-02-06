@@ -33,6 +33,32 @@ describe BottledDecorator do
     end
     ExampleDecoratedClass.new
   }
+  subject(:second_decorated){
+    class ExampleDecoratedClass
+      attr_accessor :attributes, :first_name, :last_name
+
+      def initialize(attributes = {first_name: 'Mami', last_name: 'Hayes-Reed'})
+        @attributes = attributes
+        attributes.each do |att, val|
+          self.send("#{att}=", val)
+        end
+      end
+
+      def example_method
+        "This is an example"
+      end
+
+      def example_with_parameters(a_param)
+        return true if a_param
+      end
+
+      def as_json(args)
+        JSON.parse @attributes.to_json
+      end
+
+    end
+    ExampleDecoratedClass.new
+  }
   subject(:decorator){
     class ExampleDecoratorClass
       include BottledDecorator
@@ -64,6 +90,24 @@ describe BottledDecorator do
       end
     end
     StackingDecoratorClass.(decorator)
+  }
+  subject(:collection_decorator){
+    class ExampleDecoratorClass
+      include BottledDecorator
+
+      def example_method
+        super + " within an example"
+      end
+
+      def full_name
+        "#{first_name} #{last_name}"
+      end
+
+      def display_test_var
+        @test_var
+      end
+    end
+    ExampleDecoratorClass.([decorated, second_decorated], test_var: 'This is a test variable')
   }
   describe '#new' do
     it 'responds to overridden messages' do
@@ -128,6 +172,14 @@ describe BottledDecorator do
 
     it "should repond to stacked component methods" do
       expect(stacking_decorator.respond_to?(:first_name)).to eq(true)
+    end
+
+    it "should decorate an Enumarable collection" do
+      expect(collection_decorator).to be_instance_of(Array)
+    end
+
+    it "should decorate an Enumarable collection and be able to call decorated methods" do
+      expect(collection_decorator.last.full_name).to eq("Mami Hayes-Reed")
     end
   end
 end
