@@ -20,9 +20,7 @@ module BottledDecorator
     end
     @component = component
     options.each do |option_key, option_val|
-      class << self
-        attr_reader option_key
-      end
+      (class << self; self; end).class_eval { attr_reader option_key }
       self.instance_variable_set(:"@#{option_key}", option_val)
     end
   end
