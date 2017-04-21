@@ -119,6 +119,21 @@ module BottledDecorator
     @component.to_param
   end
 
+  # Public: Gets the root component in the case of multiple wrapped components
+  # by first searching if the current decorators component itself holds a
+  # component.
+  #
+  # Examples
+  #
+  #   decorated_user.root_component
+  #   # => #<User:00x0...>
+  #
+  # Returns whichever is the lowest component in the stack.
+  def root_component
+    return @component.root_component if @component.respond_to? :component
+    @component
+  end
+
   # Internal: Allows methods found in the decorator, as well as methods found
   # in the original decorated component to be recognised by #method method.
   #
@@ -149,5 +164,4 @@ module BottledDecorator
       end
     end
   end
-
 end
