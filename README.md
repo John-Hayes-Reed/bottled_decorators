@@ -75,21 +75,21 @@ Once generated, the next things to do is decorate loads of stuff!
 Unlike some other implementations of decorators (many of which I dare to say are not actually decorators but just View Objects / Helpers that are hijacking the word *decorator*), BottledDecorators do not use an extension style of decorating. Instead they wrap up our objects in a lovely cosy blanket of decoration:
 
 ```ruby
-pirate_user = PiratizedUser.(@user)
+pirate_user = PiratizedUser.call(@user)
 
 # or
 
-@large_burger = LargeFoodItem.(burger)
+@large_burger = LargeFoodItem.call(burger)
 ```
 
 You can also wrap a collection, to get an Array of decorated objects:
 
 ```ruby
-@pirates = PiratizedUser.(@users)
+@pirates = PiratizedUser.call(@users)
 # returns an Array
 ```
 
-As can be seen above, this wrapping is done using the decorator class' `::call` method, so a simple `.()` will suffice to get the job done, or any other preferred choice of envoking the call method.
+As can be seen above, this wrapping is done using the decorator class' `::call` method.
 
 #### Bottled Decorators in action
 
@@ -99,9 +99,9 @@ Once we have our decorated object, its just a case of invoking your methods:
 @user.name
 # => "John Hayes-Reed"
 @user.age
-# => 27
+# => 100
 
-@user = PiratizedUser.(@user)
+@user = PiratizedUser.call(@user)
 @user.name
 # => "Cap'n John Hayes-Reed"
 @user.greeting
@@ -109,7 +109,7 @@ Once we have our decorated object, its just a case of invoking your methods:
 
 # of course we can still access the components original methods as well
 @user.age
-# => 27
+# => 100
 ```
 
 Because BottledDecorators wrap instead of extend, we can also keep wrapping on multiple layers, adding on functionality to overridden methods indefinately, because each layer looks at its own component for its `super`, and not the original instance:
@@ -132,13 +132,13 @@ end
 @user.name
 # => "John Hayes-Reed"
 
-@user = PiratizedUser.(@user)
+@user = PiratizedUser.call(@user)
 @user.name
 # => "Cap'n John Hayes-Reed"
 @user.greeting
 # => "Yo ho ho and a bottle of rum!"
 
-@user = DrunkUser.(@user)
+@user = DrunkUser.call(@user)
 @user.name
 # => "Cap'n John Hayes-Reed, the drunkard!"
 @user.greeting
@@ -153,15 +153,15 @@ Because of this layering ability, we can use a single decorator to represent mul
 # => 100
 
 # a large burger
-LargeFoodItem.(@burger).cost
+LargeFoodItem.call(@burger).cost
 # => 150
 
 # an extra large burger
-LargeFoodItem.(LargeFoodItem.(@burger)).cost
+LargeFoodItem.call(LargeFoodItem.call(@burger)).cost
 # => 200
 
 # SUPERSIIIIIZE
-LargeFoodItem.(LargeFoodItem.(LargeFoodItem.(@burger))).cost
+LargeFoodItem.call(LargeFoodItem.call(LargeFoodItem.call(@burger))).cost
 # => 250
 ```
 
@@ -184,11 +184,11 @@ end
 # => 100
 
 # with a side order drink
-WithDrink.(@burger).cost
+WithDrink.call(@burger).cost
 # => 115
 
 # a large burger with a side order drink
-LargeFoodItem.(WithDrink.(@burger)).cost
+LargeFoodItem.call(WithDrink.call(@burger)).cost
 # => 165
 ```
 
