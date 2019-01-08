@@ -1,5 +1,7 @@
 # BottledDecorators
 
+![](https://ruby-gem-downloads-badge.herokuapp.com/bottled_decorators?type=total)
+
 bottled_decorators are here to make your life easier, and provide decorators that are actually decorators and not just View Objects / View Helpers with the name 'decorator'. bottled_decorators encourage the use of DRY and reusable code by stopping the direct model relation and 'my job is to prepare something for the view' mentality seen in some gems and implementations, and to bring decorators back to what they should be, a reusable and stackable extra layer of functionality to be used **anywhere** and not just in views.
 Creating your decorators are also as easy as pie with the botted_decorator generator. All you need to worry about is your method logic, let bottled_decorators do the rest for you!
 
